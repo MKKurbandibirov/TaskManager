@@ -39,7 +39,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
-RUN poetry install  --no-interaction --no-ansi
+RUN poetry install --no-interaction --no-ansi
 
 ADD . /app
 ENV DJANGO_SETTINGS_MODULE="task_manager.settings"
