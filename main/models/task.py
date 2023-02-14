@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from models import tag, user
 
 
@@ -19,7 +18,7 @@ class Task(models.Model):
     change_date = models.DateTimeField()
     expire_date = models.DateTimeField()
     priority = models.IntegerField()
-    tags = ArrayField(models.ForeignKey(tag.Tag, on_delete=models.CASCADE))
+    tags = models.ManyToManyField(tag.Tag)
     author = models.ForeignKey(user.User, on_delete=models.CASCADE)
     manager = models.ForeignKey(user.User, on_delete=models.CASCADE)
     state = models.CharField(
