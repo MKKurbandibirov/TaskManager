@@ -1,5 +1,6 @@
 from django.db import models
-from models import tag, user
+from .tag import Tag
+from .user import User
 
 
 class Task(models.Model):
@@ -12,15 +13,17 @@ class Task(models.Model):
         RELEASED = "released"
         ARCHIVED = "archived"
 
-    title = models.CharField(max_length=63)
+    title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     create_date = models.DateTimeField()
     change_date = models.DateTimeField()
     expire_date = models.DateTimeField()
     priority = models.IntegerField()
-    tags = models.ManyToManyField(tag.Tag)
-    author = models.ForeignKey(user.User, on_delete=models.CASCADE)
-    manager = models.ForeignKey(user.User, on_delete=models.CASCADE)
     state = models.CharField(
-        max_length=63, default=State.NEW_TASK, choices=State.choices
+        max_length=255, default=State.NEW_TASK, choices=State.choices
     )
+
+    tags = models.ManyToManyField(Tag)
+
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='author')
+    manager = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='manager')
